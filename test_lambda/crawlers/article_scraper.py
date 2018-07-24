@@ -20,33 +20,36 @@ class ArticleScraper(Article):
 
     def parse_article(self):
         ''' Download, Parse and NLP a given article '''
-
-        # download source code
-        self.article.download()
-
-        # parse code
-        self.article.parse()
-
-        # populate article obj with parsed data
         try:
-            self.article_obj['title'] = self.article.title.encode('utf-8').strip()
-            print(self.article_obj['title'])
-        except:
-            self.article_obj['title'] = ""
+            # download source code
+            self.article.download()
 
-        try:
-            self.article_obj['publish_date'] = self.article.publish_date.encode('utf-8').strip()
-        except:
-            self.article_obj['publish_date'] = ""
+            # parse code
+            self.article.parse()
 
-        try:
-            self.article_obj['text'] = self.article.text.encode('utf-8').strip()
-        except:
-            self.article_obj['text'] = ""
+            # populate article obj with parsed data
+            try:
+                self.article_obj['title'] = self.article.title.encode('utf-8').strip()
+                print(self.article_obj['title'])
+            except:
+                self.article_obj['title'] = ""
 
-        try:
-            self.article_obj['top_image'] = self.article.top_image
-        except:
-            self.article_obj['top_image'] = ""
+            try:
+                self.article_obj['publish_date'] = self.article.publish_date.encode('utf-8').strip()
+            except:
+                self.article_obj['publish_date'] = ""
 
-        print(self.article_obj)
+            try:
+                self.article_obj['text'] = self.article.text.encode('utf-8').strip()
+            except:
+                self.article_obj['text'] = ""
+
+            try:
+                self.article_obj['top_image'] = self.article.top_image
+            except:
+                self.article_obj['top_image'] = ""
+
+            print(self.article_obj)
+
+        except:
+            pass
