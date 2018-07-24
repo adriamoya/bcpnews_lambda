@@ -29,8 +29,6 @@ cd working
 # Install virtualenv
 make install
 
-# Change DATA_DIRECTORY = '.newspaper_scraper' by DATA_DIRECTORY = '/tmp/.newspaper_scraper' in newspaper/settings.py
-
 # Build zip
 make build
 
