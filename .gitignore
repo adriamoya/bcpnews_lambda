@@ -1,0 +1,5 @@
+backup/
+env/
+package/
+*/__pycache__/
+__pycache__/
