@@ -49,6 +49,7 @@ remove_unused:
 
 zip:
 	find . | grep -E "(__pycache__|\.pyc$)" | xargs rm -rf
+	find . -name '.DS_Store' -type f -delete
 	cd ./package/tmp && zip -r ../$(PROJECT).zip .
 
 lambda_delete:

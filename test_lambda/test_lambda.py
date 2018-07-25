@@ -7,11 +7,12 @@ from crawlers.expansion import parse_expansion
 print('Loading function')
 
 def lambda_handler(event, context):
+    # crawl_date = event['crawl_date']
     crawl_date = "20180720"
     fecha = datetime.datetime.strptime(crawl_date,"%Y%m%d")
 
     parse_cincodias(fecha)
-    parse_expansion(fecha)
+    # parse_expansion(fecha)
 
 
 if __name__ == '__main__':
