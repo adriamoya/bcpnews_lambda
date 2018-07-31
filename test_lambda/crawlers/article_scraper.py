@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
+import boto3
 import datetime
-
 from newspaper import Article
 
 class ArticleScraper(Article):
@@ -15,7 +15,9 @@ class ArticleScraper(Article):
         self.article_obj['newspaper'] = newspaper
 
         if self.article_obj:
+            # initiate article
             self.article = Article(url, language='es')
+            # parse article
             self.parse_article()
 
     def parse_article(self):
@@ -50,6 +52,7 @@ class ArticleScraper(Article):
                 self.article_obj['top_image'] = ""
 
             print(self.article_obj)
+            return self.article_obj
 
         except:
             pass

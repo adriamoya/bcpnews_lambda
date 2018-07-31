@@ -8,6 +8,9 @@ from newspaper import Article
 def parse_cincodias(crawl_date):
     print("\nInitializing Cincodias spider ...\n")
     print("-"*80)
+    # connection to s3 bucket
+    # s3 = boto3.resource('s3')
+    # self.bucket = s3.create_bucket(Bucket='cincodias')
 
     NEWSPAPER = 'cincodias'
     BASE_URL  = 'https://cincodias.elpais.com'
@@ -23,6 +26,7 @@ def parse_cincodias(crawl_date):
         print("\nArgument type not valid.")
         pass
 
+    articles_obj = []
     for url in start_urls_list:
         result = requests.get(url)
         c = result.content
@@ -34,3 +38,5 @@ def parse_cincodias(crawl_date):
                 a = title.find_all('a')[0]
                 url = BASE_URL + a.get('href')
                 new_article = ArticleScraper(url, NEWSPAPER)
+                if new_article:
+                    articles_obj.append(new_article)
