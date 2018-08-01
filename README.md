@@ -1,6 +1,7 @@
 ## Installation
 
-### 1. Docker container
+### 1. Manual installation
+#### 1.1. Docker container
 
 Spin up an [Ubuntu](https://hub.docker.com/_/ubuntu/) container:
 
@@ -23,7 +24,7 @@ Move into the working directory (you should be able to see your Lambda function 
 ```shell
 cd working
 ```
-### 2. Makefile
+#### 1.2. Makefile
 
 ```shell
 # Install virtualenv
@@ -35,3 +36,7 @@ make build
 # Delete and deploy to new lambda function
 make lambda
 ```
+
+## 2. Automatic
+
+Build Dockerfile and run container.
