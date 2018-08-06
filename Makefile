@@ -20,19 +20,21 @@ virtual:
 			. ./$(VIRTUAL_ENV)/bin/activate; \
 			pip install -r requirements.txt; \
 		); \
-		# AWS Lambda can write only to /tmp, so in settings.py we need to change DATA_DIRECTORY
 		sed -i -e "s:.newspaper_scraper:/tmp/.newspaper_scraper:g" $(VIRTUAL_ENV)/lib/python3.6/site-packages/newspaper/settings.py; \
 	fi
 	@echo ""
 
 clean_package:
+	@echo "--> Cleaning package/ directory"
 	rm -rf ./package/*
 
 build_package_temp:
+	@echo "--> Building package/ directory"
 	mkdir -p ./package/tmp/lib
 	cp -a ./$(PROJECT)/. ./package/tmp/
 
 copy_python:
+	@echo "--> Copying dependencies to root level"
 	if test -d $(VIRTUAL_ENV)/lib; then \
 		cp -r lxml/ $(VIRTUAL_ENV)/lib/python3.6/site-packages/lxml/; \
 		cp -a $(VIRTUAL_ENV)/lib/python3.6/site-packages/. ./package/tmp/; \
@@ -43,13 +45,15 @@ copy_python:
 	fi
 
 remove_unused:
+	@echo "--> Removing unused packages"
 	rm -rf ./package/tmp/wheel*
 	rm -rf ./package/tmp/easy-install*
 	rm -rf ./package/tmp/setuptools*
 
 zip:
-	# find . | grep -E "(__pycache__|\.pyc$)" | xargs rm -rf
-	# find . -name '.DS_Store' -type f -delete
+	@echo "--> Zipping"
+	find . | grep -E "(__pycache__|\.pyc$)" | xargs rm -rf
+	find . -name '.DS_Store' -type f -delete
 	cd ./package/tmp && zip -r ../$(PROJECT).zip .
 
 lambda_delete:
