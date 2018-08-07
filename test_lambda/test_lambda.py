@@ -29,7 +29,7 @@ def lambda_handler(event, context):
 if __name__ == "__main__":
     event = {
         "crawl_date": "20180720",
-        "newspaper": "cincodias"
+        "newspaper": "expansion"
 
     }
     lambda_handler(event, {})

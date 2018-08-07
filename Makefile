@@ -49,7 +49,7 @@ remove_unused:
 	rm -rf ./package/tmp/wheel*
 	rm -rf ./package/tmp/easy-install*
 	rm -rf ./package/tmp/setuptools*
-	# find ./package/tmp/ -name "boto*" -type d -exec rm -r "{}" \;
+	find ./package/tmp/ -name "boto*" -type d -exec rm -r {} +
 
 zip:
 	@echo "--> Zipping"

@@ -31,19 +31,20 @@ class ArticleScraper(Article):
 
             # populate article obj with parsed data
             try:
-                self.article_obj["title"] = self.article.title.encode("utf-8").strip()
-                # self.article_obj["title"] = self.article.title
-                print(self.article_obj["title"])
+                self.article_obj["title"] = self.article.title
+                # self.article_obj["title"] = self.article.title.encode("utf-8").strip()
             except:
                 self.article_obj["title"] = ""
 
             try:
-                self.article_obj["publish_date"] = self.article.publish_date.encode("utf-8").strip()
+                self.article_obj["publish_date"] = self.article.publish_date
+                # self.article_obj["publish_date"] = self.article.publish_date.encode("utf-8").strip()
             except:
                 self.article_obj["publish_date"] = ""
 
             try:
-                self.article_obj["text"] = self.article.text.encode("utf-8").strip()
+                self.article_obj["text"] = self.article.text
+                # self.article_obj["text"] = self.article.text.encode("utf-8").strip()
             except:
                 self.article_obj["text"] = ""
 
