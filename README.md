@@ -40,3 +40,11 @@ make lambda
 ## 2. Automatic
 
 Build Dockerfile and run container.
+
+```shell
+docker build -t test_lambda .
+docker run -it --rm --name test_lambda $(pwd):/working test_lambda
+
+# in the container shell
+make install && make build
+```
