@@ -1,7 +1,7 @@
 
-PROJECT = test_lambda
+PROJECT = crawl_lambda
 VIRTUAL_ENV = env
-FUNCTION_NAME = test_lambda
+FUNCTION_NAME = crawl
 AWS_REGION = eu-central-1
 FUNCTION_HANDLER = lambda_handler
 LAMBDA_ROLE = arn:aws:iam::653047368971:role/service-role/sendNewsletters

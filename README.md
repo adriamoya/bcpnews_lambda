@@ -42,8 +42,8 @@ make lambda
 Build Dockerfile and run container.
 
 ```shell
-docker build -t test_lambda .
-docker run -it --rm --name test_lambda $(pwd):/working test_lambda
+docker build -t lambda_crawl .
+docker run -it --rm --name lambda_crawl $(pwd):/working lambda_crawl
 
 # in the container shell
 make install && make build
