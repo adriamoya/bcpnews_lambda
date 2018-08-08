@@ -12,8 +12,4 @@ ADD . /working
 
 WORKDIR /working
 
-# VOLUME /package
-
 RUN make install
-
-# CMD make build
