@@ -61,4 +61,4 @@ def parse_cincodias(crawl_date):
 
     s3 = boto3.resource('s3')
     bucket = s3.Bucket(BUCKET_NAME)
-    s3.Object(BUCKET_NAME, 'cincodias_articles.csv').put(Body=open('/tmp/cincodias_articles.csv', 'rb'))
+    s3.Object(BUCKET_NAME, 'cincodias_urls.csv').put(Body=open('/tmp/cincodias_articles.csv', 'rb'))

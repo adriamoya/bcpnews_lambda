@@ -37,14 +37,28 @@ make build
 make lambda
 ```
 
-## 2. Automatic
+### 2. Automatic
 
 Build Dockerfile and run container.
 
 ```shell
 docker build -t lambda_crawl .
-docker run -it --rm --name lambda_crawl $(pwd):/working lambda_crawl
+docker run -it --rm --name lambda_crawl -v $(pwd):/working lambda_crawl
 
 # in the container shell
 make install && make build
 ```
+Upload manually or automatically the zip file to the lambda function.
+
+## Setting up the Lambda
+
+### 1. Triggers
+#### 1.1. CloudWatch Events
+
+Build an event rule that triggers the first newspaper crawling (i.e. `cincodias`). The cron expression is `30 07 ? * MON-FRI *` and the input passed to the function is a JSON `{"newspaper": "cincodias"}`.
+
+This will trigger the first crawl. Subsequent crawls will be triggered using S3 events (every time a list of downloaded articles from a newspaper is stored in the S3 bucket, an event will be triggered and this same lambda will launch a new crawler).
+
+#### 1.2. S3 Events
+
+Within the S3 properties (advanced settings), set an event to trigger a notification after an object is put. Event is `Put` and Filter suffix is `urls.csv` (lambda's output).

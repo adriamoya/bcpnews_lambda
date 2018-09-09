@@ -64,4 +64,4 @@ def parse_eleconomista(crawl_date):
 
     s3 = boto3.resource('s3')
     bucket = s3.Bucket(BUCKET_NAME)
-    s3.Object(BUCKET_NAME, 'eleconomista_articles.csv').put(Body=open('/tmp/eleconomista_articles.csv', 'rb'))
+    s3.Object(BUCKET_NAME, 'eleconomista_urls.csv').put(Body=open('/tmp/eleconomista_articles.csv', 'rb'))

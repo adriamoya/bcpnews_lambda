@@ -61,4 +61,4 @@ def parse_elconfidencial(crawl_date):
 
     s3 = boto3.resource('s3')
     bucket = s3.Bucket(BUCKET_NAME)
-    s3.Object(BUCKET_NAME, 'elconfidencial_articles.csv').put(Body=open('/tmp/elconfidencial_articles.csv', 'rb'))
+    s3.Object(BUCKET_NAME, 'elconfidencial_urls.csv').put(Body=open('/tmp/elconfidencial_articles.csv', 'rb'))

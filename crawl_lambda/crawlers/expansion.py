@@ -62,4 +62,4 @@ def parse_expansion(crawl_date):
 
     s3 = boto3.resource('s3')
     bucket = s3.Bucket(BUCKET_NAME)
-    s3.Object(BUCKET_NAME, 'expansion_articles.csv').put(Body=open('/tmp/expansion_articles.csv', 'rb'))
+    s3.Object(BUCKET_NAME, 'expansion_urls.csv').put(Body=open('/tmp/expansion_articles.csv', 'rb'))
