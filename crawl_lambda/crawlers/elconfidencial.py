@@ -48,7 +48,7 @@ def parse_elconfidencial(crawl_date):
                     url = a.get("href")
                     if "http" not in url:
                         url = "https:" + url
-                    new_article = ArticleScraper(url, NEWSPAPER)
+                    new_article = ArticleScraper(url, crawl_date, NEWSPAPER)
                     new_article_obj = new_article.parse_article()
                     if new_article_obj:
                         articles_obj.append(new_article_obj)
