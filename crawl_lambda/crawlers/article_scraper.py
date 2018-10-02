@@ -17,12 +17,16 @@ class ArticleScraper(Article):
 
         if self.article_obj:
             # initiate article
+            print(url)
             self.article = Article(url, language="es")
             # parse article
             # self.parse_article()
 
     def parse_article(self):
         """ Download, Parse and NLP a given article """
+        self.article.download()
+        self.article.parse()
+
         try:
             # download source code
             self.article.download()

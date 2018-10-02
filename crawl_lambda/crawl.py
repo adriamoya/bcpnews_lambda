@@ -15,32 +15,90 @@ def lambda_handler(event, context):
     REGION = 'eu-central-1' # region to launch instance.
     INSTANCE_ID = 'i-02ad64e2ab12d8719'
     INSTANCE_TYPE = 't2.medium' # instance type to launch.
+    BUCKET_NAME = 'bluecaparticles'
 
-    ec2 = boto3.resource('ec2')
+    ec2 = boto3.resource('ec2', REGION)
     instance = ec2.Instance(INSTANCE_ID)
 
     crawl_date = datetime.datetime.now()
-    print("--> Crawling date %s" % crawl_date.strftime("%Y-%m-%d"))
+    print("\n--> Crawling date %s" % crawl_date.strftime("%Y-%m-%d"))
 
+    # try:
     try:
         trigger_file = event['Records'][0]['s3']['object']['key']
-        if trigger_file:
-            # After the first crawling, an S3 event will trigger when the
-            # the output object (csv file) is put into the corresponding
-            # bucket. The process will repeat for each crawler automatically.
-            if 'cincodias' in trigger_file:
-                print("--> Crawling Elconfidencial")
-                parse_elconfidencial(crawl_date)
-            elif 'elconfidencial' in trigger_file:
-                print("--> Crawling Eleconomista")
-                parse_eleconomista(crawl_date)
-            elif 'eleconomista' in trigger_file:
-                print("--> Crawling Expansion")
-                parse_expansion(crawl_date)
-            elif 'expansion' in trigger_file:
-                print("--> Launching EC2...")
-                response = instance.start()
     except:
-        # A cloudwatch event will trigger the first crawler
-        print("--> Crawling cincodias")
-        parse_cincodias(crawl_date)
+        trigger_file = ''
+
+    if trigger_file:
+        if 'cincodias' in trigger_file:
+            print("\n--> Crawling Elconfidencial")
+            parse_elconfidencial(crawl_date, BUCKET_NAME)
+        elif 'elconfidencial' in trigger_file:
+            print("\n--> Crawling Eleconomista")
+            parse_eleconomista(crawl_date, BUCKET_NAME)
+        elif 'eleconomista' in trigger_file:
+            print("\n--> Crawling Expansion")
+            parse_expansion(crawl_date, BUCKET_NAME)
+        elif 'expansion' in trigger_file:
+            print("\n--> Launching EC2...")
+            response = instance.start()
+    else:
+        print("\n--> Crawling cincodias")
+        parse_cincodias(crawl_date, BUCKET_NAME)
+
+
+# if __name__ == '__main__':
+#
+#     # -------------
+#     # TEST
+#     # -------------
+#
+#     # Cincodias
+#     event = { 'newspaper': 'cincodias' }
+#     context = {}
+#     lambda_handler(event, context)
+#
+#     # Elconfidencial
+#     event = {
+#         'Records': [
+#             {
+#                 's3': {
+#                     'object': {
+#                         'key': 'cincodias_urls.csv'
+#                     }
+#                 }
+#             }
+#         ]
+#     }
+#     context = {}
+#     lambda_handler(event, context)
+#
+#     # Eleconomista
+#     event = {
+#         'Records': [
+#             {
+#                 's3': {
+#                     'object': {
+#                         'key': 'elconfidencial_urls.csv'
+#                     }
+#                 }
+#             }
+#         ]
+#     }
+#     context = {}
+#     lambda_handler(event, context)
+#
+#     # Expansion
+#     event = {
+#         'Records': [
+#             {
+#                 's3': {
+#                     'object': {
+#                         'key': 'eleconomista.csv'
+#                     }
+#                 }
+#             }
+#         ]
+#     }
+#     context = {}
+#     lambda_handler(event, context)
