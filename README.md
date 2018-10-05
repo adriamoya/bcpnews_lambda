@@ -1,4 +1,60 @@
-## Installation
+# BBB Crawling Lambda
+
+This project contains scripts and dependencies to deploy the BBB crawling process on AWS Lambda.
+
+* The python application (lambda function) lives in `/crawl_lambda` directory. It's a lightweight set of crawlers built with [`requests`](http://docs.python-requests.org/en/master/) and [`beautifulsoup`](https://pypi.org/project/beautifulsoup4/). Each crawler scrapes a different online newspaper and extracts links to articles.
+
+* Python libraries and other dependencies are stored in the virtual environment and must be included in the final package that is uploaded to AWS. The `lxml` library is automatically copied into the final package (this is not really necessary since we are no longer using the [`newspaper3k`](https://newspaper.readthedocs.io/en/latest/) library to parse the articles).
+
+This application can be uploaded to AWS Lambda by using [`zappa`](https://github.com/Miserlou/Zappa). However, here it is configured to spin up a `docker` container with the same OS (`ubuntu`), use the Makefile commands to install and build the final package and manually upload the zipped application to AWS.
+
+## Execution logic
+
+1. The lambda function is executed every day from a CloudWatch event rule using a cron expression (`30 07 ? * MON-FRI *`).
+2. The lambda handler triggers the first spider (`cincodias`).
+3. Urls extracted from Cincodías are stored into a S3 bucket.
+4. The S3 bucket, after the put event, calls the lambda function again.
+5. This time, the lambda triggers a new spider (`elconfidencial`). This is possible because the handler receives the event coming from the bucket and it can determine which crawler to launch based on that event.
+6. The new spiders downloads and stores the new urls into S3.
+7. This process is repeated until the last spider is triggered. At this point, the crawling process is finished and the lambda spins up an EC2 instance that will run the article download, classification, text similarity and email sending processes (using a crontab job that is launched when booting the instance). The instance will stop after the newsletter is sent (by another lambda).
+
+## Directory structure
+
+```shell
+# tree . -I __pycache__ --dirsfirst -L 3 > tree.txt
+.
+├── crawl_lambda
+│   ├── crawlers
+│   │   ├── __init__.py
+│   │   ├── cincodias.py
+│   │   ├── elconfidencial.py
+│   │   ├── eleconomista.py
+│   │   └── expansion.py
+│   └── crawl.py
+├── env
+│   ├── bin
+│   ├── include
+│   ├── lib
+│   └── pip-selfcheck.json
+├── lxml
+├── package
+│   ├── tmp
+│   │   ├── PIL
+│   │   ├── Pillow-5.2.0.dist-info
+│   │   ├── PyYAML-3.13.dist-info
+│   │   ├── ...
+│   │   ├── feedparser.py
+│   │   ├── requests_file.py
+│   │   └── six.py
+│   └── crawl_lambda.zip
+├── Dockerfile
+├── Makefile
+├── README.md
+├── bluecap_bbb_crawl.yaml
+└── requirements.txt
+```
+
+## Deployment
 
 ### 1. Manual installation
 #### 1.1. Docker container
@@ -34,6 +90,7 @@ make install
 make build
 
 # Delete and deploy to new lambda function
+# (might not work if heavy package)
 make lambda
 ```
 
