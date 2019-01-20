@@ -1,4 +1,4 @@
-# BBB Crawling Lambda
+# [BBB Crawling Lambda](https://medium.com/@adriamoyaortiz/classifying-news-to-build-a-newsletter-with-deep-learning-part-2-cd6104fa7317)
 
 This project contains scripts and dependencies to deploy the BBB crawling process on AWS Lambda.
 
