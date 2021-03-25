@@ -15,7 +15,7 @@ newspaper3k==0.2.6
 nltk==3.3
 Pillow==5.2.0
 python-dateutil==2.7.3
-PyYAML==3.13
+PyYAML==5.4
 requests==2.19.1
 requests-file==1.4.3
 s3transfer==0.1.13
