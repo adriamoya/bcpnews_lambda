@@ -21,4 +21,4 @@ requests-file==1.4.3
 s3transfer==0.1.13
 six==1.11.0
 tldextract==2.2.0
-urllib3==1.23
+urllib3==1.26.5
