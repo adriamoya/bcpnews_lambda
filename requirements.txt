@@ -10,7 +10,7 @@ feedparser==5.2.1
 idna==2.7
 jieba3k==0.35.1
 jmespath==0.9.3
-lxml==4.2.3
+lxml==4.9.1
 newspaper3k==0.2.6
 nltk==3.3
 Pillow==5.2.0
